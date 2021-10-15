@@ -30,7 +30,7 @@ public class Player1Control : MonoBehaviour
         // Raygun Position Set
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
-            if (Mathf.Abs(bodyP1.velocity.x) >= Mathf.Abs(bodyP1.velocity.y) && bodyP1.velocity.x >= 0)
+            if (Mathf.Abs(bodyP1.velocity.x) >= Mathf.Abs(bodyP1.velocity.y) && bodyP1.velocity.x > 0)
             {
                 rayGunPosition = new Vector2(0.52f, 0);
                 rayGunP1.transform.localPosition = rayGunPosition;
@@ -38,7 +38,7 @@ public class Player1Control : MonoBehaviour
                 rayGunRotation = new Vector3(0, 0, 0);
                 rayGunP1.transform.eulerAngles = rayGunRotation;
             }
-            else if (Mathf.Abs(bodyP1.velocity.x) <= Mathf.Abs(bodyP1.velocity.y) && bodyP1.velocity.y >= 0)
+            else if (Mathf.Abs(bodyP1.velocity.x) <= Mathf.Abs(bodyP1.velocity.y) && bodyP1.velocity.y > 0)
             {
                 rayGunPosition = new Vector2(0, 1);
                 rayGunP1.transform.localPosition = rayGunPosition;
@@ -46,7 +46,7 @@ public class Player1Control : MonoBehaviour
                 rayGunRotation = new Vector3(0, 0, 90);
                 rayGunP1.transform.eulerAngles = rayGunRotation;
             }
-            else if (Mathf.Abs(bodyP1.velocity.x) >= Mathf.Abs(bodyP1.velocity.y) && bodyP1.velocity.x <= 0)
+            else if (Mathf.Abs(bodyP1.velocity.x) >= Mathf.Abs(bodyP1.velocity.y) && bodyP1.velocity.x < 0)
             {
                 rayGunPosition = new Vector2(-0.52f, 0);
                 rayGunP1.transform.localPosition = rayGunPosition;
@@ -54,7 +54,7 @@ public class Player1Control : MonoBehaviour
                 rayGunRotation = new Vector3(0, 0, 180);
                 rayGunP1.transform.eulerAngles = rayGunRotation;
             }
-            else if (Mathf.Abs(bodyP1.velocity.x) <= Mathf.Abs(bodyP1.velocity.y) && bodyP1.velocity.x <= 0)
+            else if (Mathf.Abs(bodyP1.velocity.x) <= Mathf.Abs(bodyP1.velocity.y) && bodyP1.velocity.y < 0)
             {
                 rayGunPosition = new Vector2(0, -1);
                 rayGunP1.transform.localPosition = rayGunPosition;
