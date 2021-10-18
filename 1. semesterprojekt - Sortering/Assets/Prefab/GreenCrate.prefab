@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1165588504174559650}
   - component: {fileID: -5368451880456706766}
   m_Layer: 0
-  m_Name: GreenCrate 1
+  m_Name: GreenCrate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
