@@ -290,8 +290,83 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueCrate
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8920155759794370714, guid: e14c5207f60a4c04bac03722b420a5c4, type: 3}
+      propertyPath: m_TagString
+      value: Box
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -6245640205529003737, guid: e14c5207f60a4c04bac03722b420a5c4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e14c5207f60a4c04bac03722b420a5c4, type: 3}
+--- !u!1 &259188823 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8920155759794370714, guid: e14c5207f60a4c04bac03722b420a5c4, type: 3}
+  m_PrefabInstance: {fileID: 259188822}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &259188824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259188823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_TextComponent: {fileID: 0}
+  m_Placeholder: {fileID: 0}
+  m_ContentType: 0
+  m_InputType: 0
+  m_AsteriskChar: 42
+  m_KeyboardType: 0
+  m_LineType: 0
+  m_HideMobileInput: 0
+  m_CharacterValidation: 0
+  m_CharacterLimit: 0
+  m_OnEndEdit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_CustomCaretColor: 0
+  m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
+  m_Text: 
+  m_CaretBlinkRate: 0.85
+  m_CaretWidth: 1
+  m_ReadOnly: 0
+  m_ShouldActivateOnSelect: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,10 +1036,11 @@ GameObject:
   - component: {fileID: 1773584597}
   - component: {fileID: 1773584596}
   - component: {fileID: 1773584595}
+  - component: {fileID: 1773584600}
   - component: {fileID: 1773584599}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1091,11 +1167,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 1773584594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f51bb606521ec0544b5e7110d081e317, type: 3}
+  m_Script: {fileID: 11500000, guid: 996037b250629a244a77d31314d6180d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 500
-  rayGunP2: {fileID: 1915215684}
+  speed: 10
+  rb: {fileID: 1773584595}
+  box: {fileID: 259188823}
+  player: {fileID: 1773584598}
+  maxCarry: 3
+  m_PlayerNumber: 2
+  boxOffset: {x: 0, y: 0, z: 0}
+  carryObject: 0
+  currentCarry: 0
+--- !u!70 &1773584600
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773584594}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
 --- !u!1 &1846010772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,10 +1353,11 @@ GameObject:
   - component: {fileID: 1921157865}
   - component: {fileID: 1921157864}
   - component: {fileID: 1921157863}
+  - component: {fileID: 1921157862}
   - component: {fileID: 1921157861}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1271,12 +1371,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 1921157860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8074de89017aa47a94863eb2ee6458, type: 3}
+  m_Script: {fileID: 11500000, guid: 996037b250629a244a77d31314d6180d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 500
-  rayGunP1: {fileID: 625826025}
-  range: 10
+  speed: 10
+  rb: {fileID: 1921157863}
+  box: {fileID: 0}
+  player: {fileID: 1921157866}
+  maxCarry: 3
+  m_PlayerNumber: 1
+  boxOffset: {x: 0, y: 0, z: 0}
+  carryObject: 0
+  currentCarry: 0
+--- !u!70 &1921157862
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921157860}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
 --- !u!50 &1921157863
 Rigidbody2D:
   serializedVersion: 4

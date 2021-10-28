@@ -11,6 +11,13 @@ public class Player1Control : MonoBehaviour
     private float horizontalP1;
     public float speed;
 
+    // Pick up objects
+    public GameObject box;
+    public Transform player;
+    private bool carryObject = false;
+    public int maxCarry = 3;
+    private int currentCarry = 0;
+
     public Transform rayGunP1;
     private Vector2 rayGunPosition;
     private Vector3 rayGunRotation;
@@ -64,11 +71,33 @@ public class Player1Control : MonoBehaviour
             }
         }
 
-        RaycastHit hit;
-
-        if (Input.GetButtonDown("PickUpP1") && Physics.Raycast(rayGunP1.transform.position, transform.forward, out hit, range) && hit.collider.gameObject.CompareTag("Stack"))
+        RaycastHit2D hit = Physics2D.Raycast(rayGunP1.transform.position, transform.position, range);
+        if (hit.collider != null)
         {
+            Debug.Log("Hit " + hit.collider.tag);
+            Debug.DrawRay(transform.position, transform.position, Color.black);
+        }
 
+        if (Input.GetButtonDown("PickUpP1") && Physics2D.Raycast(rayGunP1.transform.position, transform.position, range) && hit.collider.gameObject.CompareTag("Stack"))
+        {
+            if (carryObject == false)
+            {
+                box.transform.SetParent(player);
+                carryObject = true;
+                currentCarry = currentCarry + 1;
+            }
+
+            else if (carryObject == true && currentCarry <= maxCarry)
+            {
+                box.transform.SetParent(player);
+                currentCarry = currentCarry + 1;
+            }
+
+            /*else if (carryObject == true && currentCarry == maxCarry)
+            {
+                Debug.Log("Can't carry anymore!");
+            }*/
+            Debug.Log("Target hit");
         }
     }
 
