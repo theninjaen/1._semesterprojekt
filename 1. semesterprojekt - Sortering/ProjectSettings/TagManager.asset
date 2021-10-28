@@ -3,7 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Red
+  - Orange
+  - Yellow
+  - Green
+  - Blue
+  - Purple
+  - Broom
+  - Book
+  - Goblet
+  - Hat
+  - Bomb
+  - Wand
   layers:
   - Default
   - TransparentFX
