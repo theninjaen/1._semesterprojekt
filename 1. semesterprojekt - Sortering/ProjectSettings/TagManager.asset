@@ -4,8 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Stack
-  - Box
+  - Red
+  - Orange
+  - Yellow
+  - Green
+  - Blue
+  - Purple
+  - Broom
+  - Book
+  - Goblet
+  - Hat
+  - Bomb
+  - Wand
   layers:
   - Default
   - TransparentFX
