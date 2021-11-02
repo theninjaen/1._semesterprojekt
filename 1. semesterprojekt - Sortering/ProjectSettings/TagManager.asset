@@ -16,20 +16,21 @@ TagManager:
   - Hat
   - Bomb
   - Wand
+  - Pick Up
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - BlueBoxes
+  - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Red
+  - Orange
+  - Yellow
+  - Green
+  - Blue
+  - Purple
+  - Hat
   - 
   - 
   - 

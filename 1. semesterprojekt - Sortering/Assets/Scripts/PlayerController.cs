@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f;
     public Rigidbody2D rb;
     Vector2 movement;
-    public GameObject box;
+    public GameObject pickUp;
     public Transform player;
     public int maxCarry = 3;
     public int m_PlayerNumber = 1;
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         }
         Debug.DrawRay(rb.position, dir, Color.blue);
 
-        if (Input.GetButtonDown("PickUp" + m_PlayerNumber) && hit.collider.tag == "Box" && hit.collider.GetComponent<SpriteRenderer>().enabled == true)
+        if (Input.GetButtonDown("PickUp" + m_PlayerNumber) && hit.collider.tag == "Pick Up" && hit.collider.GetComponent<SpriteRenderer>().enabled == true)
         {
             if (carryObject == false)
             {

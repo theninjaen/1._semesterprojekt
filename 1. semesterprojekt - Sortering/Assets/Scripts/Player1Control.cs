@@ -12,7 +12,7 @@ public class Player1Control : MonoBehaviour
     public float speed;
 
     // Pick up objects
-    public GameObject box;
+    public GameObject pickUp;
     public Transform player;
     private bool carryObject = false;
     public int maxCarry = 3;
@@ -82,15 +82,15 @@ public class Player1Control : MonoBehaviour
         {
             if (carryObject == false)
             {
-                box.transform.SetParent(player);
+                pickUp.transform.SetParent(player);
                 carryObject = true;
-                currentCarry = currentCarry + 1;
+                currentCarry += 1;
             }
 
             else if (carryObject == true && currentCarry <= maxCarry)
             {
-                box.transform.SetParent(player);
-                currentCarry = currentCarry + 1;
+                pickUp.transform.SetParent(player);
+                currentCarry += 1;
             }
 
             /*else if (carryObject == true && currentCarry == maxCarry)

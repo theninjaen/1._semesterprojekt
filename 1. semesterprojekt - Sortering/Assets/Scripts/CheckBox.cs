@@ -5,7 +5,7 @@ using UnityEngine;
 public class CheckBox : MonoBehaviour
 {
     public bool full;
-    public LayerMask BlueBoxes;
+    public LayerMask CheckBoxes;
     public int boxesStored;
     public int boxesFull;
     public Vector2 scale = new Vector2(3, 3);
@@ -14,13 +14,13 @@ public class CheckBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0, BlueBoxes);
+        colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0, CheckBoxes);
 
         boxesStored = colliders.Length;
 

@@ -38,21 +38,33 @@ public class PickUps : MonoBehaviour
         {
             case "Red":
                 objectColor = new Color(255f / 255f, 51f / 255f, 51f / 255f);
+                info[0].layer = 6;
+                info[1].layer = 12;
                 break;
             case "Orange":
                 objectColor = new Color(255f / 255f, 153f / 255f, 51f / 255f);
+                info[0].layer = 7;
+                info[1].layer = 12;
                 break;
             case "Yellow":
                 objectColor = new Color(255f / 255f, 255f / 255f, 51f / 255f);
+                info[0].layer = 8;
+                info[1].layer = 12;
                 break;
             case "Green":
                 objectColor = new Color(51f / 255f, 255f / 255f, 51f / 255f);
+                info[0].layer = 9;
+                info[1].layer = 12;
                 break;
             case "Blue":
                 objectColor = new Color(51f / 255f, 153f / 255f, 255f / 255f);
+                info[0].layer = 10;
+                info[1].layer = 12;
                 break;
             case "Purple":
                 objectColor = new Color(153f / 255f, 51f / 255f, 255f / 255f);
+                info[0].layer = 11;
+                info[1].layer = 12;
                 break;
         }
 
@@ -63,6 +75,6 @@ public class PickUps : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
