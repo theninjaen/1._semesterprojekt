@@ -8,13 +8,13 @@ public class CheckBox : MonoBehaviour
     public LayerMask CheckBoxes;
     public int boxesStored;
     public int boxesFull;
-    public Vector2 scale = new Vector2(3, 3);
+    private Vector2 scale;
     public Collider2D[] colliders;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        scale = new Vector2(transform.localScale.x, transform.localScale.y);
     }
 
     // Update is called once per frame
@@ -31,11 +31,6 @@ public class CheckBox : MonoBehaviour
         else
         {
             full = false;
-        }
-
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            Debug.Log(i);
         }
     }
 }
