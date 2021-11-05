@@ -9,10 +9,10 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 10f;
     public Rigidbody2D rb;
-    Vector2 movement;
+    public Vector2 movement;
     public GameObject pickUp;
     public Transform player;
-    public int maxCarry = 3;
+    public int maxCarry = 1;
     public int m_PlayerNumber = 1;
     public Vector3 boxOffset;
 
@@ -52,28 +52,34 @@ public class PlayerController : MonoBehaviour
         }
         Debug.DrawRay(rb.position, dir, Color.blue);
 
-        if (Input.GetButtonDown("PickUp" + m_PlayerNumber) && hit.collider.tag == "Pick Up" && hit.collider.GetComponent<SpriteRenderer>().enabled == true)
+        if (Input.GetButtonDown("PickUp" + m_PlayerNumber) && hit.collider.tag == "Pick Up" /*&& hit.collider.GetComponent<SpriteRenderer>().enabled == true*/)
         {
             if (carryObject == false)
             {
                 hit.collider.transform.SetParent(player);
                 carryObject = true;
                 currentCarry += 1;
-                hit.collider.transform.position = player.transform.position;
+                //hit.collider.transform.position = player.transform.position;
                 //hit.collider.gameObject.SetActive(false);
+
+                BoxMovement moveBox = GetComponentInChildren<BoxMovement>();
+                moveBox.OnPickup();
             }
-            else if (carryObject == true && currentCarry <= maxCarry)
+
+            /*else if (carryObject == true && currentCarry < maxCarry)
             {
                 hit.collider.transform.SetParent(player);
                 currentCarry += 1;
                 hit.collider.transform.position = player.transform.position;
                 hit.collider.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            }
+            }*/
+
             else if (carryObject == true && currentCarry >= maxCarry)
             {
                 Debug.Log("Can't carry anymore.");
             }
         }
+
         if (Input.GetButtonDown("Drop" + m_PlayerNumber))
         {
             if (carryObject == true)
@@ -81,26 +87,25 @@ public class PlayerController : MonoBehaviour
                 //player.transform.GetChild(0).gameObject.SetActive(true);
                 if (player.transform.GetChild(0).gameObject.activeSelf)
                 {
+                    BoxMovement moveBox = GetComponentInChildren<BoxMovement>();
+                    moveBox.OnDrop();
+
                     player.transform.DetachChildren();
                     currentCarry = 0;
                     //player.transform.GetChild(0).gameObject.SetActive(true);
                 }
             }
-            else
-            {
-                //Do nothing
-            }
+        }
+
+        if (currentCarry <= 0)
+        {
+            carryObject = false;
         }
     }
 
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
-
-        if (currentCarry <= 0)
-        {
-            carryObject = false;
-        }
 
         /*if (carryObject == true)
         {

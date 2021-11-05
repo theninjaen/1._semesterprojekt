@@ -554,7 +554,7 @@ Transform:
   m_GameObject: {fileID: 229282021}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -5.6, z: 0}
-  m_LocalScale: {x: 25, y: 1, z: 1}
+  m_LocalScale: {x: 20.18, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1846382421}
   m_RootOrder: 1
@@ -879,7 +879,7 @@ Transform:
   m_GameObject: {fileID: 625605108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 5.6, z: 0}
-  m_LocalScale: {x: 25, y: 1, z: 1}
+  m_LocalScale: {x: 20.18, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1846382421}
   m_RootOrder: 0
@@ -3140,6 +3140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   rb: {fileID: 1773584595}
+  movement: {x: 0, y: 0}
   pickUp: {fileID: 0}
   player: {fileID: 1773584598}
   maxCarry: 3
@@ -3587,6 +3588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   rb: {fileID: 1921157863}
+  movement: {x: 0, y: 0}
   pickUp: {fileID: 0}
   player: {fileID: 1921157866}
   maxCarry: 3
@@ -4385,7 +4387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8202164006915960200, guid: 3393ad6e1ee3bb04397bf6767fde763c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.16
+      value: 4.17
       objectReference: {fileID: 0}
     - target: {fileID: 8202164006915960200, guid: 3393ad6e1ee3bb04397bf6767fde763c, type: 3}
       propertyPath: m_LocalPosition.z

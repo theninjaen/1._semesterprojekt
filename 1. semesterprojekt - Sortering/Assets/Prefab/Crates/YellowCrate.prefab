@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1684046134851721592}
   - component: {fileID: 5334858806457920991}
   - component: {fileID: 1364041679169955198}
-  - component: {fileID: 6820969093915786500}
+  - component: {fileID: 4867899295054359711}
   m_Layer: 8
   m_Name: YellowCrate
   m_TagString: Pick Up
@@ -110,24 +110,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5}
   m_EdgeRadius: 0
---- !u!50 &6820969093915786500
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!114 &4867899295054359711
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6675014204659501741}
-  m_BodyType: 0
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19648016748de3845852e1049cf68987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 1.7
+  lerpSetting: 0.85

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 145936178297983395}
   - component: {fileID: 9124425150988052850}
   - component: {fileID: -9093748582118333420}
+  - component: {fileID: 8775232312621615310}
   m_Layer: 10
   m_Name: BlueCrate
   m_TagString: Pick Up
@@ -109,3 +110,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5}
   m_EdgeRadius: 0
+--- !u!114 &8775232312621615310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8920155759794370714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19648016748de3845852e1049cf68987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 1.7
+  lerpSetting: 0.85

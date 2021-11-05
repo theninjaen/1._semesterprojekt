@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6970888715151990232}
   - component: {fileID: 6793642833078420854}
   - component: {fileID: 6494524023704973975}
+  - component: {fileID: 7206127940100302565}
   m_Layer: 6
   m_Name: RedCrate
   m_TagString: Pick Up
@@ -109,3 +110,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5}
   m_EdgeRadius: 0
+--- !u!114 &7206127940100302565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2410441750784194910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19648016748de3845852e1049cf68987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 1.7
+  lerpSetting: 0.85
