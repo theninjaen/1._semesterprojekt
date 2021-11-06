@@ -90,8 +90,6 @@ public class PlayerController : MonoBehaviour
                     BoxMovement moveBox = GetComponentInChildren<BoxMovement>();
                     moveBox.OnDrop();
 
-                    player.transform.DetachChildren();
-                    currentCarry = 0;
                     //player.transform.GetChild(0).gameObject.SetActive(true);
                 }
             }
