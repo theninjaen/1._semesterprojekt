@@ -10,21 +10,33 @@ public class BoxMovement : MonoBehaviour
     private bool moving;
     private Vector2 boxPos;
     private float multiplier;
-
-    public float distance;
-
+    
     [Range(0, 1)]
     public float lerpSetting;
+    public float distance;
 
     //Stacking/Drop Variables
     private BoxCollider2D myCollider;
-    public Collider2D[] colliders;
     private Vector2 scale;
     private float currentOverlap;
     private float bestOverlap;
     private GameObject bestGameObject;
     private SpriteRenderer bestSprite;
     private BoxCollider2D bestBox;
+    private BoxMovement bestBoxMovement;
+    private Collider2D[] colliders;
+    private int randomX;
+    private int randomY;
+
+    [HideInInspector]
+    public int boxesStacked;
+    [HideInInspector]
+    public int colorBoxesStacked;
+    [HideInInspector]
+    public string boxColor;
+    public int maxStack;
+    public LayerMask PickUpLayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +45,10 @@ public class BoxMovement : MonoBehaviour
         scale = new Vector2(transform.localScale.x, transform.localScale.y);
 
         bestOverlap = 100;
+
+        boxesStacked = 1;
+        colorBoxesStacked = 1;
+        maxStack = 4;
     }
 
     // Update is called once per frame
@@ -69,8 +85,9 @@ public class BoxMovement : MonoBehaviour
     {
         moving = true;
         placement = GetComponentInParent<PlayerController>();
-
         myCollider.enabled = false;
+        boxesStacked = 1;
+        colorBoxesStacked = 1;
 
         if (bestGameObject && bestBox.enabled == false && bestSprite.enabled == false)
         {
@@ -81,41 +98,65 @@ public class BoxMovement : MonoBehaviour
 
     public void OnDrop()
     {
-        moving = false;
-
-        colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0);
-
-        myCollider.enabled = true;
-
         placement.player.transform.DetachChildren();
         placement.currentCarry = 0;
 
-        if (colliders.Length != 0)
+        while (moving == true)
         {
-            for (int i = 0; i < colliders.Length; i++)
+            colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0, PickUpLayer);
+
+            if (colliders.Length > 0)
             {
-                if (colliders[i].gameObject.GetComponent<BoxCollider2D>().enabled && colliders[i].gameObject.layer == 3)
+                for (int i = 0; i < colliders.Length; i++)
                 {
                     currentOverlap = Vector2.Distance(transform.position, colliders[i].gameObject.transform.position);
 
                     if (currentOverlap < bestOverlap)
                     {
                         bestOverlap = currentOverlap;
-
                         bestGameObject = colliders[i].gameObject;
+                        bestBox = bestGameObject.GetComponent<BoxCollider2D>();
+                        bestSprite = bestGameObject.GetComponent<SpriteRenderer>();
+                        bestBoxMovement = bestGameObject.GetComponent<BoxMovement>();
                     }
                 }
             }
 
-            transform.position = bestGameObject.transform.position;
+            if (bestOverlap != 100)
+            {
+                boxesStacked += bestBoxMovement.boxesStacked;
 
-            bestBox = bestGameObject.GetComponent<BoxCollider2D>();
-            bestSprite = bestGameObject.GetComponent<SpriteRenderer>();
+                if (boxColor == bestBoxMovement.boxColor)
+                {
+                    colorBoxesStacked += bestBoxMovement.colorBoxesStacked;
+                }
+            }
 
-            bestBox.enabled = false;
-            bestSprite.enabled = false;
+            if (boxesStacked <= maxStack)
+            {
+                if (bestOverlap != 100)
+                {
+                    transform.position = bestGameObject.transform.position;
 
-            bestOverlap = 100;
+                    bestBox.enabled = false;
+                    bestSprite.enabled = false;
+                }
+
+                myCollider.enabled = true;
+                moving = false;
+                bestOverlap = 100;
+
+            } else
+            {
+                randomX = Random.Range(-1, 2);
+                randomY = Random.Range(-1, 2);
+                transform.position = new Vector2(transform.position.x + randomX, transform.position.y + randomY);
+                boxesStacked = 1;
+                colorBoxesStacked = 1;
+
+                myCollider.enabled = true;
+                moving = false;
+            }
         }
     }
 }

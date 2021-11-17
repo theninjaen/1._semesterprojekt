@@ -7,19 +7,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10f;
-    public Rigidbody2D rb;
-    public Vector2 movement;
-    public GameObject pickUp;
-    public Transform player;
-    public int maxCarry = 1;
-    public int m_PlayerNumber = 1;
-    public Vector3 boxOffset;
-
-    public bool carryObject = false;
+    private int maxCarry;
+    private bool carryObject = false;
     private Vector3 previousGood = Vector3.zero;
+    private BoxMovement moveBox;
+    
+    [HideInInspector]
     public int currentCarry = 0;
+    [HideInInspector]
+    public Vector2 movement;
+    [HideInInspector]
+    public Transform player;
+    [HideInInspector]
+    public int m_PlayerNumber;
 
+    public Rigidbody2D rb;
+    public float radius;
+    public float distance;
+    public float speed;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +50,7 @@ public class PlayerController : MonoBehaviour
         }
 
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(rb.position, dir, 1f);
+        hit = Physics2D.CircleCast(rb.position, radius, dir, distance);
         if (hit)
         {
             Debug.Log("Hit " + hit.collider.gameObject.tag);
@@ -62,7 +67,7 @@ public class PlayerController : MonoBehaviour
                 //hit.collider.transform.position = player.transform.position;
                 //hit.collider.gameObject.SetActive(false);
 
-                BoxMovement moveBox = GetComponentInChildren<BoxMovement>();
+                moveBox = GetComponentInChildren<BoxMovement>();
                 moveBox.OnPickup();
             }
 
@@ -80,23 +85,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Drop" + m_PlayerNumber))
+        if (Input.GetButtonDown("Drop" + m_PlayerNumber) && carryObject == true)
         {
-            if (carryObject == true)
-            {
-                //player.transform.GetChild(0).gameObject.SetActive(true);
-                if (player.transform.GetChild(0).gameObject.activeSelf)
-                {
-                    BoxMovement moveBox = GetComponentInChildren<BoxMovement>();
-                    moveBox.OnDrop();
-
-                    //player.transform.GetChild(0).gameObject.SetActive(true);
-                }
-            }
-        }
-
-        if (currentCarry <= 0)
-        {
+            moveBox.OnDrop();
             carryObject = false;
         }
     }

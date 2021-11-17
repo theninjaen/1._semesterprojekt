@@ -123,8 +123,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19648016748de3845852e1049cf68987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1.7
   lerpSetting: 0.85
+  distance: 1.7
+  boxesStacked: 0
+  colorBoxesStacked: 0
+  boxColor: 
+  maxStack: 0
+  PickUpLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  colliders: []
 --- !u!1 &4794079458739622975
 GameObject:
   m_ObjectHideFlags: 0
