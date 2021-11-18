@@ -38,7 +38,10 @@ public class CanvasScript : MonoBehaviour
         m_EmptyCat = checkBoxCat.GetComponent<CheckBoxCat>();
 
         if (m_EmptyCat.empty == true)
+        {
             transform.GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(2).gameObject.SetActive(true);
+        }
 
         for (int i = 0; i < fullBoxes.Length; ++i)
         {
@@ -52,7 +55,10 @@ public class CanvasScript : MonoBehaviour
         }
 
         if (player2Win == true)
+        {
             transform.GetChild(1).gameObject.SetActive(true);
+            transform.GetChild(2).gameObject.SetActive(true);
+        }
     }
 
     void FixedUpdate()

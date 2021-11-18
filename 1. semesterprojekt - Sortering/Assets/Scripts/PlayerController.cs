@@ -57,49 +57,31 @@ public class PlayerController : MonoBehaviour
         }
         Debug.DrawRay(rb.position, dir, Color.blue);
 
-        if (Input.GetButtonDown("PickUp" + m_PlayerNumber) && hit.collider.tag == "Pick Up" /*&& hit.collider.GetComponent<SpriteRenderer>().enabled == true*/)
+        if (Input.GetButtonDown("PickUp" + m_PlayerNumber))
         {
-            if (carryObject == false)
+            if (carryObject == false && hit.collider.tag == "Pick Up")
             {
                 hit.collider.transform.SetParent(player);
                 carryObject = true;
-                currentCarry += 1;
-                //hit.collider.transform.position = player.transform.position;
-                //hit.collider.gameObject.SetActive(false);
 
                 moveBox = GetComponentInChildren<BoxMovement>();
                 moveBox.OnPickup();
             }
 
-            /*else if (carryObject == true && currentCarry < maxCarry)
+            else if (carryObject == true)
             {
-                hit.collider.transform.SetParent(player);
-                currentCarry += 1;
-                hit.collider.transform.position = player.transform.position;
-                hit.collider.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            }*/
+                BoxMovement moveBox = GetComponentInChildren<BoxMovement>();
+                moveBox.OnDrop();
 
-            else if (carryObject == true && currentCarry >= maxCarry)
-            {
-                Debug.Log("Can't carry anymore.");
+                player.transform.DetachChildren();
+                carryObject = false;
             }
-        }
-
-        if (Input.GetButtonDown("Drop" + m_PlayerNumber) && carryObject == true)
-        {
-            moveBox.OnDrop();
-            carryObject = false;
         }
     }
 
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
-
-        /*if (carryObject == true)
-        {
-            player.transform.GetChild(0).position = (rb.position, dir);
-        }*/
     }
 
 
