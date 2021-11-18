@@ -11,6 +11,8 @@ public class CheckBox : MonoBehaviour
     private Vector2 scale;
     public Collider2D[] colliders;
     public string checkColor;
+    public Color checkBoxColor;
+    private SpriteRenderer boxColor;
 
     public string thisCheckBoxColor;
 
@@ -18,6 +20,7 @@ public class CheckBox : MonoBehaviour
     void Start()
     {
         scale = new Vector2(transform.localScale.x, transform.localScale.y);
+        boxColor = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -30,6 +33,13 @@ public class CheckBox : MonoBehaviour
         else
         {
             full = false;
+        }
+
+        if (full != true)
+        {
+            boxColor.color = checkBoxColor;
+        } else {
+            boxColor.color = new Color(0f / 255f, 0f / 255f, 0f / 255f, 123f / 255f);
         }
     }
 

@@ -8,6 +8,7 @@ public class CheckBoxCat : MonoBehaviour
     public int boxesStored;
     private Vector2 scale;
     public Collider2D[] colliders;
+    public LayerMask checkLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class CheckBoxCat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0);
+        colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0, checkLayer);
 
         boxesStored = colliders.Length;
 

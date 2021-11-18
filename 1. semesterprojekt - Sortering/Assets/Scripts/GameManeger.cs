@@ -190,6 +190,7 @@ public class GameManeger : MonoBehaviour
                         checkBoxColors[0] = "";
                         boxColor.color = new Color(255f / 255f, 51f / 255f, 51f / 255f, 123f / 255f);
                         checkBox.checkColor = colorBox;
+                        checkBox.checkBoxColor = boxColor.color;
                         running = 0;
                         break;
 
@@ -197,6 +198,7 @@ public class GameManeger : MonoBehaviour
                         checkBoxColors[1] = "";
                         boxColor.color = new Color(255f / 255f, 153f / 255f, 51f / 255f, 123f / 255f);
                         checkBox.checkColor = colorBox;
+                        checkBox.checkBoxColor = boxColor.color;
                         running = 0;
                         break;
 
@@ -204,6 +206,7 @@ public class GameManeger : MonoBehaviour
                         checkBoxColors[2] = "";
                         boxColor.color = new Color(255f / 255f, 255f / 255f, 51f / 255f, 123f / 255f);
                         checkBox.checkColor = colorBox;
+                        checkBox.checkBoxColor = boxColor.color;
                         running = 0;
                         break;
 
@@ -211,6 +214,7 @@ public class GameManeger : MonoBehaviour
                         checkBoxColors[3] = "";
                         boxColor.color = new Color(51f / 255f, 255f / 255f, 51f / 255f, 123f / 255f);
                         checkBox.checkColor = colorBox;
+                        checkBox.checkBoxColor = boxColor.color;
                         running = 0;
                         break;
 
@@ -218,6 +222,7 @@ public class GameManeger : MonoBehaviour
                         checkBoxColors[4] = "";
                         boxColor.color = new Color(51f / 255f, 153f / 255f, 255f / 255f, 123f / 255f);
                         checkBox.checkColor = colorBox;
+                        checkBox.checkBoxColor = boxColor.color;
                         running = 0;
                         break;
 
@@ -225,6 +230,7 @@ public class GameManeger : MonoBehaviour
                         checkBoxColors[5] = "";
                         boxColor.color = new Color(153f / 255f, 51f / 255f, 255f / 255f, 123f / 255f);
                         checkBox.checkColor = colorBox;
+                        checkBox.checkBoxColor = boxColor.color;
                         running = 0;
                         break;
 
