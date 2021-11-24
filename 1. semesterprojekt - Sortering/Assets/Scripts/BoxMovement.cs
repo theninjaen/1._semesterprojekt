@@ -8,12 +8,25 @@ public class BoxMovement : MonoBehaviour
 
     //Movement Variables
     private bool moving;
-    private Vector2 boxPos;
+    private bool flying;
+    private Vector2 newPos;
+    private Vector2 startPos;
+    private Vector2 flyPos;
     private float multiplier;
-    
+    private float direction;
+    private float trajectoryY;
+    private float trajectoryX;
+    private float trajectoryHeight;
+    private float trajectoryLenght;
+    private int count = 0;
+
     [Range(0, 1)]
     public float lerpSetting;
     public float distance;
+    public List<GameObject> colliosionDetection;
+    public float trajectoryHeightAdjustment;
+    public float trajectoryHeightSpeed;
+    public float trajectoryLenghtAdjustment;
 
     //Stacking/Drop Variables
     private BoxCollider2D myCollider;
@@ -35,7 +48,8 @@ public class BoxMovement : MonoBehaviour
     [HideInInspector]
     public string boxColor;
     public int maxStack;
-    public LayerMask PickUpLayer;
+    public LayerMask pickUpLayer;
+    public LayerMask pickedUpLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +63,11 @@ public class BoxMovement : MonoBehaviour
         boxesStacked = 1;
         colorBoxesStacked = 1;
         maxStack = 4;
+
+        /*colliosionDetection.AddRange(GameObject.FindGameObjectsWithTag("Pick Up"));
+        colliosionDetection.AddRange(GameObject.FindGameObjectsWithTag("Player"));
+        colliosionDetection.AddRange(GameObject.FindGameObjectsWithTag("Player Wall"));
+        colliosionDetection.Remove(gameObject);*/
     }
 
     // Update is called once per frame
@@ -68,8 +87,19 @@ public class BoxMovement : MonoBehaviour
             {
                 multiplier = distance / placement.movement.y;
             }
-            
-            boxPos = new Vector2(placement.movement.x * multiplier, placement.movement.y * multiplier);
+
+            newPos = new Vector2(placement.movement.x * multiplier, placement.movement.y * multiplier);
+        }
+
+        if (flying)
+        {
+            trajectoryHeight += trajectoryHeightSpeed;
+            trajectoryLenght += trajectoryLenghtAdjustment;
+
+            trajectoryY = Mathf.Sin(trajectoryHeight) * trajectoryHeightAdjustment;
+            trajectoryX = trajectoryLenght * direction;
+
+            flyPos = new Vector2(startPos.x + trajectoryX, startPos.y + trajectoryY);
         }
     }
 
@@ -77,15 +107,40 @@ public class BoxMovement : MonoBehaviour
     {
         if (moving && Input.GetButton("Horizontal" + placement.m_PlayerNumber) || moving && Input.GetButton("Vertical" + placement.m_PlayerNumber))
         {
-            transform.localPosition = Vector2.Lerp(boxPos, transform.localPosition, lerpSetting);
+            transform.localPosition = Vector2.Lerp(newPos, transform.localPosition, lerpSetting);
+        }
+
+        if (flying)
+        {
+            transform.position = flyPos;
+
+            if (flyPos.y <= startPos.y)
+            {
+                count++;
+                if (count == 2)
+                {
+                    count = 0;
+                    transform.position = new Vector2(flyPos.x, startPos.y);
+
+                    flying = false;
+                    moving = true;
+                    OnDrop();
+                }
+            }
         }
     }
 
     public void OnPickup()
     {
+        /*for (int i = 0; i < colliosionDetection.Count; i++)
+        {
+            Physics2D.IgnoreCollision(colliosionDetection[i].GetComponent<BoxCollider2D>(), gameObject.GetComponent<BoxCollider2D>(), true);
+        }
+        //gameObject.layer = 16;*/
+        myCollider.enabled = false;
+
         moving = true;
         placement = GetComponentInParent<PlayerController>();
-        myCollider.enabled = false;
         boxesStacked = 1;
         colorBoxesStacked = 1;
 
@@ -98,12 +153,9 @@ public class BoxMovement : MonoBehaviour
 
     public void OnDrop()
     {
-        placement.player.transform.DetachChildren();
-        placement.currentCarry = 0;
-
         while (moving == true)
         {
-            colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0, PickUpLayer);
+            colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0, pickUpLayer);
 
             if (colliders.Length > 0)
             {
@@ -143,6 +195,12 @@ public class BoxMovement : MonoBehaviour
                 }
 
                 myCollider.enabled = true;
+                /*gameObject.layer = 3;
+                for (int i = 0; i < colliosionDetection.Count; i++)
+                {
+                    Physics2D.IgnoreCollision(colliosionDetection[i].GetComponent<BoxCollider2D>(), gameObject.GetComponent<BoxCollider2D>(), false);
+                }*/
+
                 moving = false;
                 bestOverlap = 100;
 
@@ -155,8 +213,39 @@ public class BoxMovement : MonoBehaviour
                 colorBoxesStacked = 1;
 
                 myCollider.enabled = true;
+                /*gameObject.layer = 3;
+                for (int i = 0; i < colliosionDetection.Count; i++)
+                {
+                    Physics2D.IgnoreCollision(colliosionDetection[i].GetComponent<BoxCollider2D>(), gameObject.GetComponent<BoxCollider2D>(), false);
+                }*/
+
                 moving = false;
             }
         }
+    }
+
+    public void OnThrow()
+    {
+        moving = false;
+        flying = true;
+        direction = Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber);
+        startPos = transform.position;
+        trajectoryHeight = 0;
+
+        if (Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber) == 0)
+        {
+            float dif = transform.position.x - GetComponentInParent<Transform>().position.x;
+
+            if (dif <= 0)
+            {
+                direction = -1;
+            } else if (dif > 0)
+            {
+                direction = 1;
+            }
+        }
+
+        placement.player.transform.DetachChildren();
+        placement.currentCarry = 0;
     }
 }

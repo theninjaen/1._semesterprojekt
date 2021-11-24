@@ -125,3 +125,6 @@ MonoBehaviour:
   empty: 0
   boxesStored: 0
   colliders: []
+  checkLayer:
+    serializedVersion: 2
+    m_Bits: 65544

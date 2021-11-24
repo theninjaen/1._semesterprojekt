@@ -17,6 +17,7 @@ TagManager:
   - Bomb
   - Wand
   - Pick Up
+  - Player Wall
   layers:
   - Default
   - TransparentFX
@@ -33,8 +34,8 @@ TagManager:
   - Hat
   - PlayerWall
   - Players
-  - 
-  - 
+  - RegularWall
+  - PickedUp
   - 
   - 
   - 

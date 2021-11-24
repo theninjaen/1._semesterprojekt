@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private bool carryObject = false;
     private Vector3 previousGood = Vector3.zero;
     private BoxMovement moveBox;
+    private GameObject hitBox;
     
     [HideInInspector]
     public int currentCarry = 0;
@@ -22,14 +23,16 @@ public class PlayerController : MonoBehaviour
     public int m_PlayerNumber;
 
     public Rigidbody2D rb;
+    public GameObject hitBoxHighlight;
     public float radius;
     public float distance;
     public float speed;
+    public Vector2 highlightScale;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        hitBoxHighlight.transform.localScale = highlightScale;
     }
 
     // Update is called once per frame
@@ -51,11 +54,18 @@ public class PlayerController : MonoBehaviour
 
         RaycastHit2D hit;
         hit = Physics2D.CircleCast(rb.position, radius, dir, distance);
-        if (hit)
-        {
-            Debug.Log("Hit " + hit.collider.gameObject.tag);
-        }
         Debug.DrawRay(rb.position, dir, Color.blue);
+
+        if (hit && carryObject != true && hit.collider.gameObject.tag == "Pick Up")
+        {
+            //Debug.Log("Hit " + hit.collider.gameObject.tag);
+            hitBox = hit.collider.gameObject;
+
+            hitBoxHighlight.transform.position = hitBox.transform.position + new Vector3(0, 0, 0.01f);
+        } else
+        {
+            hitBoxHighlight.transform.position = new Vector2(20, 20);
+        }
 
         if (Input.GetButtonDown("PickUp" + m_PlayerNumber))
         {
@@ -70,19 +80,25 @@ public class PlayerController : MonoBehaviour
 
             else if (carryObject == true)
             {
-                BoxMovement moveBox = GetComponentInChildren<BoxMovement>();
                 moveBox.OnDrop();
 
                 player.transform.DetachChildren();
                 carryObject = false;
             }
         }
+        if (m_PlayerNumber == 2)
+        {
+            if (Input.GetButtonDown("Throw" + m_PlayerNumber) && carryObject == true)
+            {
+                moveBox.OnThrow();
+                carryObject = false;
+                print("yas");
+            }
+        }
     }
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
+        rb.AddForce(movement * speed * Time.fixedDeltaTime);
     }
-
-
 }

@@ -305,14 +305,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lerpSetting: 0.798
   distance: 1.7
+  colliosionDetection: []
+  trajectoryHeightAdjustment: 3
+  trajectoryHeightSpeed: 0.1
+  trajectoryLenghtAdjustment: 0.3
   boxesStacked: 0
   colorBoxesStacked: 0
   boxColor: 
   maxStack: 4
-  PickUpLayer:
+  pickUpLayer:
     serializedVersion: 2
     m_Bits: 8
-  colliders: []
+  pickedUpLayer:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!1 &7699955632205914271
 GameObject:
   m_ObjectHideFlags: 0

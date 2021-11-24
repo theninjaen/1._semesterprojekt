@@ -26,7 +26,18 @@ public class CheckBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         if (boxesStored >= boxesFull)
+        colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0, CheckBoxes);
+        boxesStored = 0;
+    
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].transform.GetChild(0).gameObject.layer == LayerMask.NameToLayer(checkColor))
+            {
+                boxesStored += colliders[i].GetComponent<BoxMovement>().colorBoxesStacked;
+            }
+        }
+
+        if (boxesStored >= boxesFull)
         {
             full = true;
         }
@@ -43,9 +54,8 @@ public class CheckBox : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+   /* private void OnTriggerEnter2D(Collider2D collision)
     {
-        boxesStored = 0;
         colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0, CheckBoxes);
 
         for (int i = 0; i < colliders.Length; i++)
@@ -55,5 +65,5 @@ public class CheckBox : MonoBehaviour
                 boxesStored += colliders[i].GetComponent<BoxMovement>().colorBoxesStacked;
             }
         }
-    }
+    }*/
 }
