@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class STGameManager : MonoBehaviour
 {
     //Variables for deciding resource colors
 
     public LayerMask pickUpLayer;
+    public GameObject[] pickUps;
 
     private string[] color = new string[6];
     private GameObject pickUpColor;
     private GameObject txt;
     private Color objectColor;
     private int colorIndex;
-    private Collider2D[] pickUps;
+    private int countdown;
     private BoxMovement boxMovement;
 
     //Variables for Checking for suitable colors for checkboxes
@@ -52,13 +54,26 @@ public class STGameManager : MonoBehaviour
     private string colorBox;
     private int running;
 
+    //Variables for checking who won
+    public GameObject checkBoxCat;
+    public GameObject winText1;
+    public GameObject winText2;
+    public GameObject reset;
+    public bool player1Win;
+    public bool player2Win;
+    public int fullCheckP1;
+    public int fullCheckP2;
+
+    private bool[] fullP1 = new bool[5];
+    private bool[] fullP2 = new bool[4];
+    private int[] BoxesP1 = new int[5];
+    private int[] BoxesP2 = new int[4];
+    private CheckBoxCat m_EmptyCat;
+
     // Start is called before the first frame update
     void Start()
     {
         //Deciding resource colors
-
-        //Finds all pickups in game
-        pickUps = Physics2D.OverlapBoxAll(Vector2.zero, new Vector2(18, 12), 0, pickUpLayer);
 
         color[0] = "Red";
         color[1] = "Orange";
@@ -67,9 +82,13 @@ public class STGameManager : MonoBehaviour
         color[4] = "Blue";
         color[5] = "Purple";
 
+        countdown = 1;
+
         //Assigns values for all pickups in game
         for (int i = 0; i < pickUps.Length; i++)
         {
+            pickUps[i].SetActive(true);
+
             pickUpColor = pickUps[i].transform.GetChild(0).gameObject;
             txt = pickUps[i].transform.GetChild(1).GetChild(0).gameObject;
             boxMovement = pickUps[i].GetComponent<BoxMovement>();
@@ -112,8 +131,18 @@ public class STGameManager : MonoBehaviour
 
             //Applys selected color to object material and defines text.
             pickUps[i].gameObject.GetComponent<Renderer>().material.color = objectColor;
-            txt.GetComponent<UnityEngine.UI.Text>().text = color[colorIndex];
+            txt.GetComponent<Text>().text = color[colorIndex];
 
+            countdown--;
+            if (countdown != 0)
+            {
+                pickUps[i].gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                boxMovement.OnDrop();
+                pickUps[i].gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            } else
+            {
+                countdown = 4;
+            }
         }
 
         //=======================================================================================================
@@ -280,6 +309,86 @@ public class STGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        for (int i = 0; i < BoxesP1.Length; i++)
+        {
+            BoxesP1[i] = checkBoxes[i + 4].GetComponent<CheckBox>().boxesStored;
+        }
 
+        for (int i = 0; i < BoxesP2.Length; i++)
+        {
+            BoxesP2[i] = checkBoxes[i].GetComponent<CheckBox>().boxesStored;
+        }
+
+        for (int i = 0; i < fullP1.Length; i++)
+        {
+            if (BoxesP1[i] >= fullCheckP1)
+            {
+                fullP1[i] = true;
+                checkBoxes[i + 4].GetComponent<SpriteRenderer>().color = new Color(0f / 255f, 0f / 255f, 0f / 255f, 123f / 255f);
+            }
+            else
+            {
+                fullP1[i] = false;
+                checkBoxes[i + 4].GetComponent<SpriteRenderer>().color = checkBoxes[i + 4].GetComponent<CheckBox>().checkBoxColor;
+            }
+        }
+
+        for (int i = 0; i < fullP2.Length; i++)
+        {
+            if (BoxesP2[i] >= fullCheckP2)
+            {
+                fullP2[i] = true;
+                checkBoxes[i].GetComponent<SpriteRenderer>().color = new Color(0f / 255f, 0f / 255f, 0f / 255f, 123f / 255f);
+            }
+            else
+            {
+                fullP2[i] = false;
+                checkBoxes[i].GetComponent<SpriteRenderer>().color = checkBoxes[i].GetComponent<CheckBox>().checkBoxColor;
+            }
+        }
+
+        m_EmptyCat = checkBoxCat.GetComponent<CheckBoxCat>();
+
+        if (player1Win != true)
+        {
+            if (m_EmptyCat.empty == true)
+            {
+                player1Win = true;
+            }
+
+            for (int i = 0; i < fullP1.Length; ++i)
+            {
+                if (fullP1[i] == false)
+                {
+                    player1Win = false;
+                    break;
+                }
+                else
+                    player1Win = true;
+            }
+        }
+
+        for (int i = 0; i < fullP2.Length; ++i)
+        {
+            if (fullP2[i] == false)
+            {
+                player2Win = false;
+                break;
+            }
+            else
+                player2Win = true;
+        }
+
+        if (player1Win == true)
+        {
+            winText1.SetActive(true);
+            reset.SetActive(true);
+        }
+
+        if (player2Win == true)
+        {
+            winText1.SetActive(true);
+            reset.SetActive(true);
+        }
     }
 }

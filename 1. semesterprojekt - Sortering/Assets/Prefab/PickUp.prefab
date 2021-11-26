@@ -207,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 7699955631127321248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 7699955632205914336}
   - {fileID: 753542943}
@@ -305,14 +305,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lerpSetting: 0.798
   distance: 1.7
-  colliosionDetection: []
   trajectoryHeightAdjustment: 3
   trajectoryHeightSpeed: 0.1
   trajectoryLenghtAdjustment: 0.3
+  moving: 0
+  colliosionDetection: []
   boxesStacked: 0
   colorBoxesStacked: 0
   boxColor: 
-  maxStack: 4
+  maxStack: 10
+  testX: 1
+  testY: 1
   pickUpLayer:
     serializedVersion: 2
     m_Bits: 8
