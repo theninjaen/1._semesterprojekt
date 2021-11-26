@@ -32,10 +32,11 @@ public class BoxMovement : MonoBehaviour
     private float currentOverlap;
     private float bestOverlap;
     private GameObject bestGameObject;
-    public SpriteRenderer bestSprite;
-    public BoxCollider2D bestBox;
+    private GameObject bestCanvas;
+    private SpriteRenderer bestSprite;
+    private BoxCollider2D bestBox;
     private BoxMovement bestBoxMovement;
-    public Collider2D[] colliders;
+    private Collider2D[] colliders;
     private int randomX;
     private int randomY;
 
@@ -82,7 +83,7 @@ public class BoxMovement : MonoBehaviour
                 multiplier = distance / placement.movement.y;
             }
 
-            newPos = new Vector2(placement.movement.x * multiplier, placement.movement.y * multiplier);
+            newPos = new Vector3(placement.movement.x * multiplier, placement.movement.y * multiplier, -0.3f);
         }
 
         if (flying)
@@ -123,7 +124,7 @@ public class BoxMovement : MonoBehaviour
     {
         if (moving && Input.GetButton("Horizontal" + placement.m_PlayerNumber) || moving && Input.GetButton("Vertical" + placement.m_PlayerNumber))
         {
-            transform.localPosition = Vector2.Lerp(newPos, transform.localPosition, lerpSetting);
+            transform.localPosition = Vector3.Lerp(newPos, transform.localPosition, lerpSetting);
         }
     }
 
@@ -132,12 +133,14 @@ public class BoxMovement : MonoBehaviour
         gameObject.layer = 16;
 
         moving = true;
+        transform.position = transform.position + new Vector3(0, 0, -0.3f);
         placement = GetComponentInParent<PlayerController>();
         boxesStacked = 1;
         colorBoxesStacked = 1;
 
         bestBox.enabled = true;
         bestSprite.enabled = true;
+        bestCanvas.SetActive(true);
     }
 
     public void OnDrop()
@@ -157,6 +160,7 @@ public class BoxMovement : MonoBehaviour
                     bestBox = bestGameObject.GetComponent<BoxCollider2D>();
                     bestSprite = bestGameObject.GetComponent<SpriteRenderer>();
                     bestBoxMovement = bestGameObject.GetComponent<BoxMovement>();
+                    bestCanvas = bestGameObject.transform.GetChild(1).gameObject;
                 }
             }
         }
@@ -179,6 +183,7 @@ public class BoxMovement : MonoBehaviour
 
                 bestSprite.enabled = false;
                 bestBox.enabled = false;
+                bestCanvas.SetActive(false);
             }
 
             gameObject.layer = 3;
