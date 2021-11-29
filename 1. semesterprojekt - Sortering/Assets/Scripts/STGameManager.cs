@@ -351,10 +351,6 @@ public class STGameManager : MonoBehaviour
 
         if (player1Win != true)
         {
-            if (m_EmptyCat.empty == true)
-            {
-                player1Win = true;
-            }
 
             for (int i = 0; i < fullP1.Length; ++i)
             {
@@ -365,6 +361,11 @@ public class STGameManager : MonoBehaviour
                 }
                 else
                     player1Win = true;
+            }
+
+            if (m_EmptyCat.empty == true)
+            {
+                player1Win = true;
             }
         }
 
@@ -387,7 +388,7 @@ public class STGameManager : MonoBehaviour
 
         if (player2Win == true)
         {
-            winText1.SetActive(true);
+            winText2.SetActive(true);
             reset.SetActive(true);
         }
     }

@@ -28,11 +28,16 @@ public class PlayerController : MonoBehaviour
     public float distance;
     public float speed;
     public Vector2 highlightScale;
+    public AudioSource pickUp;
+    public AudioSource drop;
+    private AudioSource walking;
+    public AudioClip[] walk;
 
     // Start is called before the first frame update
     void Start()
     {
         hitBoxHighlight.transform.localScale = highlightScale;
+        walking = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,6 +45,18 @@ public class PlayerController : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal" + m_PlayerNumber);
         movement.y = Input.GetAxisRaw("Vertical" + m_PlayerNumber);
+
+        if(rb.velocity.magnitude > 0.5)
+        {
+            if (!walking.isPlaying)
+            {
+                PlayRandom();
+            }
+        }
+        else
+        {
+            walking.Stop();
+        }
 
         Vector3 dir = new Vector2(movement.x, movement.y);
 
@@ -76,6 +93,8 @@ public class PlayerController : MonoBehaviour
 
                 moveBox = GetComponentInChildren<BoxMovement>();
                 moveBox.OnPickup();
+
+                pickUp.Play();
             }
 
             else if (carryObject == true)
@@ -84,6 +103,8 @@ public class PlayerController : MonoBehaviour
 
                 player.transform.DetachChildren();
                 carryObject = false;
+
+                drop.Play();
             }
         }
         if (m_PlayerNumber == 2)
@@ -95,6 +116,12 @@ public class PlayerController : MonoBehaviour
                 print("yas");
             }
         }
+    }
+
+    void PlayRandom()
+    {
+        walking.clip = walk[Random.Range(0, walk.Length)];
+        walking.Play();
     }
 
     void FixedUpdate()

@@ -52,6 +52,15 @@ public class BoxMovement : MonoBehaviour
     public LayerMask pickUpLayer;
     public LayerMask pickedUpLayer;
 
+    Vector2 floatY;
+    float originalY;
+
+    public float floatStrength;
+
+    private void Start()
+    {
+        this.originalY = this.transform.position.y;
+    }
     void Awake()
     {
         scale = new Vector2(testX, testY);
@@ -117,10 +126,18 @@ public class BoxMovement : MonoBehaviour
                 }
             }
         }
+
     }
 
     private void FixedUpdate()
     {
+        if (moving)
+        {
+            floatY = transform.localPosition;
+            floatY.y = (Mathf.Sin(Time.time) * floatStrength);
+            transform.localPosition = floatY;
+        }
+
         if (moving && Input.GetButton("Horizontal" + placement.m_PlayerNumber) || moving && Input.GetButton("Vertical" + placement.m_PlayerNumber))
         {
             transform.localPosition = Vector2.Lerp(newPos, transform.localPosition, lerpSetting);

@@ -309,7 +309,9 @@ MonoBehaviour:
   trajectoryHeightSpeed: 0.1
   trajectoryLenghtAdjustment: 0.3
   moving: 0
-  colliosionDetection: []
+  bestSprite: {fileID: 0}
+  bestBox: {fileID: 0}
+  colliders: []
   boxesStacked: 0
   colorBoxesStacked: 0
   boxColor: 
@@ -322,6 +324,7 @@ MonoBehaviour:
   pickedUpLayer:
     serializedVersion: 2
     m_Bits: 65536
+  floatStrength: 0.3
 --- !u!1 &7699955632205914271
 GameObject:
   m_ObjectHideFlags: 0
