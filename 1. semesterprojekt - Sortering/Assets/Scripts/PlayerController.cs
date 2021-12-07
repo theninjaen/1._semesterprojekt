@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
         hitBoxHighlight.transform.localScale = highlightScale;
         walking = gameObject.GetComponent<AudioSource>();
         //PlayNoise();
-        GetComponent<SpriteRenderer>().sprite = spriteList[0];
+        //GetComponent<SpriteRenderer>().sprite = spriteList[0];
     }
 
     // Update is called once per frame
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal" + m_PlayerNumber);
         movement.y = Input.GetAxisRaw("Vertical" + m_PlayerNumber);
 
-        if (movement.x < 0)
+        /*if (movement.x < 0)
         {
             GetComponent<SpriteRenderer>().sprite = spriteList[2];
             GetComponent<SpriteRenderer>().flipX = false;
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         if(ownNoise.isPlaying)
         {
             Invoke("PlayNoise", 10f);
-        }
+        }*/
 
         Vector3 dir = new Vector2(movement.x, movement.y);
 
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
                 moveBox = GetComponentInChildren<BoxMovement>();
                 moveBox.OnPickup();
 
-                pickUp.Play();
+                //pickUp.Play();
             }
 
             else if (carryObject == true)
@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
                 player.transform.DetachChildren();
                 carryObject = false;
 
-                drop.Play();
+                //drop.Play();
             }
         }
         if (m_PlayerNumber == 2)

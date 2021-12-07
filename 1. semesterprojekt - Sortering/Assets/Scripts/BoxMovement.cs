@@ -9,7 +9,7 @@ public class BoxMovement : MonoBehaviour
     //Movement Variables
     private Vector3 newPos;
     private Vector3 bobbing;
-    private Vector2 shadowSize = new Vector2(2.5f, 2.5f);
+    private Vector2 shadowSize = new Vector2(1.1f, 1.1f);
     private float multiplier;
     private float bobFloat;
     private float bobFloatVar;
@@ -97,6 +97,11 @@ public class BoxMovement : MonoBehaviour
             shadow.transform.SetParent(transform);
             shadow.transform.localScale = shadowSize * ((shadowScaleDistance - Vector3.Distance(shadow.transform.position, transform.position)) / shadowScaleDistance);
             shadow.transform.parent = null;
+        }
+
+        if (Vector3.Distance(shadow.transform.position, transform.position) < 0.1f)
+        {
+            shadow.transform.localScale = new Vector3(0, 0, 0);
         }
 
     }
@@ -194,11 +199,20 @@ public class BoxMovement : MonoBehaviour
             Vector3 shadowMoveDirection = (bestPos - shadowStartPos) / 10;
             float dropVar = 0;
             float startDistance = Vector3.Distance(startPos, bestPos);
+            float stopPos = 0;
             Vector3 drop = new Vector3(1, 1, 1);
 
             shadow.transform.parent = null;
 
-            while (Vector3.Distance(transform.position, bestPos) > startDistance / 10 && drop.y > -0.45f)
+            if (bestGameObject == shadow)
+            {
+                stopPos = -0.25f;
+            } else
+            {
+                stopPos = -0.45f;
+            }
+
+            while (Vector3.Distance(transform.position, bestPos) > startDistance / 10 && drop.y > stopPos)
             {
                 dropVar += dropAdjust;
                 drop = new Vector3(0, dropHeight * dropVar - Mathf.Pow(dropVar, 2), 0);
@@ -224,7 +238,14 @@ public class BoxMovement : MonoBehaviour
             }
         }
 
+        if (bestGameObject == shadow)
+        {
+            transform.position = bestPos + new Vector3(0, 0.25f, 0);
+        } else
+        {
         transform.position = bestPos;
+        }
+        
         shadow.transform.position = transform.position + new Vector3(0, 0, 0.1f);
 
         flying = false;
@@ -262,23 +283,6 @@ public class BoxMovement : MonoBehaviour
         {
             direction = 0;
         }
-        /*
-        if (transform.position.x <= parentPos.x)
-        {
-            direction = -1;
-            if (Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber) > 0)
-            {
-                direction = 1;
-            }
-        } else if (transform.position.x > parentPos.x)
-        {
-            direction = 1;
-            if (Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber) < 0)
-            {
-                direction = -1;
-            }
-        }
-        */
 
         while (flyPos.y >= startPos.y)
         {

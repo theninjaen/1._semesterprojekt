@@ -3195,7 +3195,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 323209145}
-  - component: {fileID: 323209144}
   - component: {fileID: 323209146}
   m_Layer: 0
   m_Name: Game Manager
@@ -3204,47 +3203,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &323209144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 323209143}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b55ae91697e515a4bbbed2dc7c6d3a57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickUpLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  overlapScale: {x: 3, y: 10}
-  overlapPosition: {x: -7.67, y: 0}
-  checkRed:
-    serializedVersion: 2
-    m_Bits: 64
-  checkOrange:
-    serializedVersion: 2
-    m_Bits: 128
-  checkYellow:
-    serializedVersion: 2
-    m_Bits: 256
-  checkGreen:
-    serializedVersion: 2
-    m_Bits: 512
-  checkBlue:
-    serializedVersion: 2
-    m_Bits: 1024
-  checkPurple:
-    serializedVersion: 2
-    m_Bits: 2048
-  reqAllowed: 5
-  checkBoxes:
-  - {fileID: 640844172}
-  - {fileID: 877293188}
-  - {fileID: 1649281877}
-  - {fileID: 627489134}
 --- !u!4 &323209145
 Transform:
   m_ObjectHideFlags: 0
@@ -4385,6 +4343,12 @@ MonoBehaviour:
   speed: 2000
   useLimit: 0
   highlightScale: {x: 1.1, y: 1.1}
+  pickUp: {fileID: 0}
+  drop: {fileID: 0}
+  walk: []
+  noises: []
+  spriteList: []
+  ownNoise: {fileID: 0}
 --- !u!70 &543339669
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -6789,6 +6753,12 @@ MonoBehaviour:
   speed: 2000
   useLimit: 0
   highlightScale: {x: 1.1, y: 1.1}
+  pickUp: {fileID: 0}
+  drop: {fileID: 0}
+  walk: []
+  noises: []
+  spriteList: []
+  ownNoise: {fileID: 0}
 --- !u!70 &889529185
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -9982,11 +9952,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7699955631127321253, guid: e9f40c653536b5543ba83976d68634ee, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.6438766
       objectReference: {fileID: 0}
     - target: {fileID: 7699955631127321253, guid: e9f40c653536b5543ba83976d68634ee, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.6438766
       objectReference: {fileID: 0}
     - target: {fileID: 7699955631127321253, guid: e9f40c653536b5543ba83976d68634ee, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11029,7 +10999,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1554374230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bae1aadce9b7fa547a3b639d66a4b173, type: 3}
+  m_Script: {fileID: 11500000, guid: a6f474f6008813342ab95b49bca2f31a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1568300890
