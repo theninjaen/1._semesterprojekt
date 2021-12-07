@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private BoxMovement moveBox;
     private GameObject hitBox;
     private float lastUse;
+    private AudioSource walking;
 
     [HideInInspector]
     public Vector2 movement;
@@ -27,12 +28,21 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float useLimit;
     public Vector2 highlightScale;
+    public AudioSource pickUp;
+    public AudioSource drop;
+    public AudioClip[] walk;
+    public AudioClip[] noises;
+    public Sprite[] spriteList;
+    public AudioSource ownNoise;
 
     // Start is called before the first frame update
     void Start()
     {
         lastUse = -useLimit;
         hitBoxHighlight.transform.localScale = highlightScale;
+        walking = gameObject.GetComponent<AudioSource>();
+        //PlayNoise();
+        GetComponent<SpriteRenderer>().sprite = spriteList[0];
     }
 
     // Update is called once per frame
@@ -40,6 +50,42 @@ public class PlayerController : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal" + m_PlayerNumber);
         movement.y = Input.GetAxisRaw("Vertical" + m_PlayerNumber);
+
+        if (movement.x < 0)
+        {
+            GetComponent<SpriteRenderer>().sprite = spriteList[2];
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else if (movement.x > 0)
+        {
+            GetComponent<SpriteRenderer>().sprite = spriteList[2];
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if(movement.y < 0)
+        {
+            GetComponent<SpriteRenderer>().sprite = spriteList[0];
+        }
+        else if (movement.y > 0)
+        {
+            GetComponent<SpriteRenderer>().sprite = spriteList[1];
+        }
+
+        if(rb.velocity.magnitude > 0.5)
+        {
+            if (!walking.isPlaying)
+            {
+                PlayRandom();
+            }
+        }
+        else
+        {
+            walking.Stop();
+        }
+
+        if(ownNoise.isPlaying)
+        {
+            Invoke("PlayNoise", 10f);
+        }
 
         Vector3 dir = new Vector2(movement.x, movement.y);
 
@@ -76,6 +122,8 @@ public class PlayerController : MonoBehaviour
 
                 moveBox = GetComponentInChildren<BoxMovement>();
                 moveBox.OnPickup();
+
+                pickUp.Play();
             }
 
             else if (carryObject == true)
@@ -84,6 +132,8 @@ public class PlayerController : MonoBehaviour
 
                 player.transform.DetachChildren();
                 carryObject = false;
+
+                drop.Play();
             }
         }
         if (m_PlayerNumber == 2)
@@ -100,6 +150,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void PlayRandom()
+    {
+        walking.clip = walk[Random.Range(0, (walk.Length-1))];
+        walking.pitch = Random.Range(0.95f, 1.05f);
+        walking.Play();
+        walking.volume = 0.1f;
+    }
+
+    void PlayNoise()
+    {
+        ownNoise.clip = noises[Random.Range(0, noises.Length-1)];
+        ownNoise.pitch = Random.Range(0.95f, 1.05f);
+        ownNoise.Play();
+        ownNoise.volume = 0.75f;
+    }
     void FixedUpdate()
     {
         rb.AddForce(movement * speed * Time.fixedDeltaTime);

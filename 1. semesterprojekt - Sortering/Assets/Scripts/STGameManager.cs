@@ -388,7 +388,7 @@ public class STGameManager : MonoBehaviour
 
         if (player2Win == true)
         {
-            winText1.SetActive(true);
+            winText2.SetActive(true);
             reset.SetActive(true);
         }
     }

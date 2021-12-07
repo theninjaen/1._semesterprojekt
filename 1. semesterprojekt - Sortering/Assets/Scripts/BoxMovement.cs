@@ -98,6 +98,7 @@ public class BoxMovement : MonoBehaviour
             shadow.transform.localScale = shadowSize * ((shadowScaleDistance - Vector3.Distance(shadow.transform.position, transform.position)) / shadowScaleDistance);
             shadow.transform.parent = null;
         }
+
     }
 
     private void FixedUpdate()
