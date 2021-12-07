@@ -2954,6 +2954,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1022420228}
     m_Modifications:
     - target: {fileID: 4571327909722797263, guid: e9f40c653536b5543ba83976d68634ee, type: 3}
+      propertyPath: trajectoryHeightAdjustment
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571327909722797263, guid: e9f40c653536b5543ba83976d68634ee, type: 3}
       propertyPath: colliosionDetection.Array.size
       value: 39
       objectReference: {fileID: 0}
@@ -3323,7 +3327,6 @@ MonoBehaviour:
   - {fileID: 1134126847}
   - {fileID: 2134014817}
   - {fileID: 1531603836}
-  dropPos: []
   overlapScale: {x: 3, y: 10}
   overlapPosition: {x: -7.67, y: 0}
   checkRed:
@@ -3344,7 +3347,7 @@ MonoBehaviour:
   checkPurple:
     serializedVersion: 2
     m_Bits: 2048
-  reqAllowed: 3
+  reqAllowed: 0
   checkBoxes:
   - {fileID: 640844172}
   - {fileID: 877293188}
@@ -4372,7 +4375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996037b250629a244a77d31314d6180d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCarry: 0
   movement: {x: 0, y: 0}
   player: {fileID: 543339672}
   m_PlayerNumber: 1
@@ -4381,7 +4383,8 @@ MonoBehaviour:
   radius: 0.25
   distance: 0.85
   speed: 2000
-  highlightScale: {x: 0.8, y: 0.8}
+  useLimit: 0
+  highlightScale: {x: 1.1, y: 1.1}
 --- !u!70 &543339669
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -6776,7 +6779,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996037b250629a244a77d31314d6180d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCarry: 0
   movement: {x: 0, y: 0}
   player: {fileID: 889529188}
   m_PlayerNumber: 2
@@ -6785,7 +6787,8 @@ MonoBehaviour:
   radius: 0.25
   distance: 0.85
   speed: 2000
-  highlightScale: {x: 0.8, y: 0.8}
+  useLimit: 0
+  highlightScale: {x: 1.1, y: 1.1}
 --- !u!70 &889529185
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

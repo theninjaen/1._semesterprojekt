@@ -7,17 +7,12 @@ public class BoxMovement : MonoBehaviour
     private PlayerController placement;
 
     //Movement Variables
-    private bool flying;
-    private Vector2 newPos;
-    private Vector2 startPos;
-    private Vector2 flyPos;
+    private Vector3 newPos;
+    private Vector3 bobbing;
+    private Vector2 shadowSize = new Vector2(2.5f, 2.5f);
     private float multiplier;
-    private float direction;
-    private float trajectoryY;
-    private float trajectoryX;
-    private float trajectoryHeight;
-    private float trajectoryLenght;
-    private int count = 0;
+    private float bobFloat;
+    private float bobFloatVar;
 
     [Range(0, 1)]
     public float lerpSetting;
@@ -25,28 +20,29 @@ public class BoxMovement : MonoBehaviour
     public float trajectoryHeightAdjustment;
     public float trajectoryHeightSpeed;
     public float trajectoryLenghtAdjustment;
+    public float bobFloatAdjust;
+    public float bobFloatHeight;
+    public float bobHeight;
+    public float shadowScaleDistance;
+    public GameObject shadow;
+    public bool flying;
     public bool moving;
 
     //Stacking/Drop Variables
     private Vector2 scale;
-    private float currentOverlap;
     private float bestOverlap;
-    private GameObject bestGameObject;
     private GameObject bestCanvas;
     private SpriteRenderer bestSprite;
     private BoxCollider2D bestBox;
-    private BoxMovement bestBoxMovement;
-    private Collider2D[] colliders;
-    private int randomX;
-    private int randomY;
 
-    [HideInInspector]
-    public int boxesStacked;
-    [HideInInspector]
-    public int colorBoxesStacked;
-    [HideInInspector]
-    public string boxColor;
+    [HideInInspector] public int boxesStacked;
+    [HideInInspector] public int colorBoxesStacked;
+    [HideInInspector] public string boxColor;
+    [HideInInspector] public Transform parentTransform;
 
+
+    public float dropAdjust;
+    public float dropHeight;
     public int maxStack;
     public int testX;
     public int testY;
@@ -86,45 +82,30 @@ public class BoxMovement : MonoBehaviour
             newPos = new Vector3(placement.movement.x * multiplier, placement.movement.y * multiplier, -0.3f);
         }
 
-        if (flying)
+        if (moving)
         {
-            trajectoryHeight += trajectoryHeightSpeed;
-            trajectoryLenght += trajectoryLenghtAdjustment;
+            bobFloatVar += bobFloatAdjust;
+            bobFloat = Mathf.Sin(bobFloatVar) * bobFloatHeight;
+            bobbing = new Vector3(0, bobHeight + bobFloat, 0);
+        }
 
-            trajectoryY = Mathf.Sin(trajectoryHeight) * trajectoryHeightAdjustment;
-            if (transform.position.x > -8.6 && transform.position.x < 8.6)
-            {
-                trajectoryX = trajectoryLenght * direction;
-            }
-
-            flyPos = new Vector2(startPos.x + trajectoryX, startPos.y + trajectoryY);
-
-            transform.position = flyPos;
-
-            if (flyPos.y <= startPos.y)
-            {
-                count++;
-                if (count == 2)
-                {
-                    count = 0;
-                    transform.position = new Vector2(flyPos.x, startPos.y);
-
-                    flying = false;
-                    moving = true;
-                    OnDrop();
-
-                    trajectoryHeight = 0;
-                    trajectoryLenght = 0;
-                }
-            }
+        if (shadow.transform.parent == transform)
+        {
+            shadow.transform.localScale = shadowSize * ((shadowScaleDistance - Vector3.Distance(shadow.transform.position, transform.position)) / shadowScaleDistance);
+        } else
+        {
+            shadow.transform.SetParent(transform);
+            shadow.transform.localScale = shadowSize * ((shadowScaleDistance - Vector3.Distance(shadow.transform.position, transform.position)) / shadowScaleDistance);
+            shadow.transform.parent = null;
         }
     }
 
     private void FixedUpdate()
     {
-        if (moving && Input.GetButton("Horizontal" + placement.m_PlayerNumber) || moving && Input.GetButton("Vertical" + placement.m_PlayerNumber))
+        if (moving)
         {
-            transform.localPosition = Vector3.Lerp(newPos, transform.localPosition, lerpSetting);
+            transform.localPosition = Vector3.Lerp(newPos + bobbing, transform.localPosition, lerpSetting);
+            shadow.transform.localPosition = new Vector3(0, -(bobFloat + bobHeight), 0.1f);
         }
     }
 
@@ -138,20 +119,32 @@ public class BoxMovement : MonoBehaviour
         boxesStacked = 1;
         colorBoxesStacked = 1;
 
-        bestBox.enabled = true;
-        bestSprite.enabled = true;
-        bestCanvas.SetActive(true);
+        if (bestBox != null && bestSprite != null && bestCanvas != null)
+        {
+            bestBox.enabled = true;
+            bestSprite.enabled = true;
+            bestCanvas.SetActive(true);
+            bestCanvas = null;
+            bestSprite = null;
+            bestBox = null;
+        }
     }
 
-    public void OnDrop()
+    public IEnumerator OnDrop()
     {
-        colliders = Physics2D.OverlapBoxAll(transform.position, scale, 0, pickUpLayer);
+        moving = false;
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(shadow.transform.position, scale, 0, pickUpLayer);
+        BoxMovement bestBoxMovement = this;
+        GameObject bestGameObject = shadow;
+        Vector3 bestPos;
+        int randomX;
+        int randomY;
 
         if (colliders.Length > 0)
         {
             for (int i = 0; i < colliders.Length; i++)
             {
-                currentOverlap = Vector2.Distance(transform.position, colliders[i].gameObject.transform.position);
+                float currentOverlap = Vector2.Distance(shadow.transform.position, colliders[i].gameObject.transform.position);
 
                 if (currentOverlap < bestOverlap)
                 {
@@ -164,69 +157,153 @@ public class BoxMovement : MonoBehaviour
                 }
             }
         }
-
+        
         if (bestOverlap != 100)
         {
             boxesStacked += bestBoxMovement.boxesStacked;
 
-            if (boxColor == bestBoxMovement.boxColor)
+            if (boxesStacked <= maxStack)
             {
-                colorBoxesStacked += bestBoxMovement.colorBoxesStacked;
+                bestPos = bestGameObject.transform.position;
+
+                if (boxColor == bestBoxMovement.boxColor)
+                {
+                    colorBoxesStacked += bestBoxMovement.colorBoxesStacked;
+                }
+            } else
+            {
+                randomX = Random.Range(-1, 2);
+                randomY = Random.Range(-1, 2);
+                bestPos = new Vector2(transform.position.x + randomX, transform.position.y + randomY);
+
+                boxesStacked = 1;
             }
+        } else
+        {
+            bestGameObject = shadow;
+            bestPos = shadow.transform.position;
+        }
+        
+        if (!flying)
+        {
+
+            Vector3 startPos = transform.position;
+            Vector3 moveDirection = (bestPos - startPos) / 10;
+            Vector3 shadowStartPos = shadow.transform.position;
+            Vector3 shadowMoveDirection = (bestPos - shadowStartPos) / 10;
+            float dropVar = 0;
+            float startDistance = Vector3.Distance(startPos, bestPos);
+            Vector3 drop = new Vector3(1, 1, 1);
+
+            shadow.transform.parent = null;
+
+            while (Vector3.Distance(transform.position, bestPos) > startDistance / 10 && drop.y > -0.45f)
+            {
+                dropVar += dropAdjust;
+                drop = new Vector3(0, dropHeight * dropVar - Mathf.Pow(dropVar, 2), 0);
+
+                transform.position += moveDirection + drop;
+
+                shadow.transform.position += new Vector3(shadowMoveDirection.x, shadowMoveDirection.y, 0);
+
+                yield return new WaitForSeconds(Time.fixedDeltaTime);
+            }
+
+            shadow.transform.SetParent(transform);
         }
 
-        if (boxesStacked <= maxStack)
+        if (bestOverlap != 100)
         {
-            if (bestOverlap != 100)
+            if (boxesStacked <= maxStack)
             {
-                transform.position = bestGameObject.transform.position;
-
                 bestSprite.enabled = false;
                 bestBox.enabled = false;
                 bestCanvas.SetActive(false);
+                bestOverlap = 100;
             }
-
-            gameObject.layer = 3;
-            moving = false;
-            bestOverlap = 100;
-
         }
-        else
-        {
-            randomX = Random.Range(-1, 2);
-            randomY = Random.Range(-1, 2);
-            transform.position = new Vector2(transform.position.x + randomX, transform.position.y + randomY);
-            boxesStacked = 1;
-            colorBoxesStacked = 1;
 
-            gameObject.layer = 3;
+        transform.position = bestPos;
+        shadow.transform.position = transform.position + new Vector3(0, 0, 0.1f);
 
-            moving = false;
-        }
-    }
+        flying = false;
+        gameObject.layer = 3;
+    } 
 
-    public void OnThrow()
+    public IEnumerator OnThrow()
     {
-        startPos = transform.position;
+        Vector3 startPos = shadow.transform.position;
+        Vector3 realStartPos = transform.position;
+        Vector3 flyPos = realStartPos + new Vector3(1, 1, 0);
+        float direction;
+        float trajectoryHeight = 0;
+        float trajectoryLenght = 0;
+        float trajectoryX = 0;
+
         moving = false;
         flying = true;
-        direction = Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber);
-        trajectoryHeight = 0;
 
-        if (Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber) == 0)
+        if (transform.position.x > parentTransform.position.x)
         {
-            float dif = transform.position.x - GetComponentInParent<Transform>().position.x;
-
-            if (dif <= 0)
+            direction = 1;
+            if (Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber) < 0)
             {
                 direction = -1;
-            } else if (dif > 0)
+            }
+        } else if (transform.position.x < parentTransform.position.x)
+        {
+            direction = -1;
+            if (Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber) > 0)
             {
                 direction = 1;
             }
+        } else
+        {
+            direction = 0;
+        }
+        /*
+        if (transform.position.x <= parentPos.x)
+        {
+            direction = -1;
+            if (Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber) > 0)
+            {
+                direction = 1;
+            }
+        } else if (transform.position.x > parentPos.x)
+        {
+            direction = 1;
+            if (Input.GetAxisRaw("Horizontal" + placement.m_PlayerNumber) < 0)
+            {
+                direction = -1;
+            }
+        }
+        */
+
+        while (flyPos.y >= startPos.y)
+        {
+            trajectoryHeight += trajectoryHeightSpeed;
+            trajectoryLenght += trajectoryLenghtAdjustment;
+
+            float trajectoryY = trajectoryHeightAdjustment * trajectoryHeight - Mathf.Pow(trajectoryHeight, 2);
+
+            if (transform.position.x > -8.6 && transform.position.x < 8.6)
+            {
+                trajectoryX = trajectoryLenght * direction;
+            }
+
+            flyPos = new Vector3(realStartPos.x + trajectoryX, realStartPos.y + trajectoryY, -0.2f);
+
+            transform.position = flyPos;
+            shadow.transform.position = new Vector3(transform.position.x, startPos.y, 0.3f);
+
+            if (flyPos.y >= startPos.y)
+            {
+                yield return new WaitForSeconds(Time.fixedDeltaTime);
+            }
         }
 
-        placement.player.transform.DetachChildren();
-        placement.currentCarry = 0;
+        transform.position = new Vector3(flyPos.x, startPos.y, -2f);
+
+        StartCoroutine("OnDrop");
     }
 }

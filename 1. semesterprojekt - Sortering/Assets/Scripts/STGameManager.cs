@@ -70,7 +70,6 @@ public class STGameManager : MonoBehaviour
     private int[] BoxesP2 = new int[4];
     private CheckBoxCat m_EmptyCat;
 
-    // Start is called before the first frame update
     void Start()
     {
         //Deciding resource colors
@@ -136,8 +135,9 @@ public class STGameManager : MonoBehaviour
             countdown--;
             if (countdown != 0)
             {
+                boxMovement.flying = false;
                 pickUps[i].gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                boxMovement.OnDrop();
+                boxMovement.StartCoroutine("OnDrop");
                 pickUps[i].gameObject.GetComponent<BoxCollider2D>().enabled = true;
             } else
             {
@@ -147,6 +147,8 @@ public class STGameManager : MonoBehaviour
 
         //=======================================================================================================
         //Checking for suitable colors for checkboxes
+
+        //int count = GameObject.FindGameObjectsWithTag("Player").Length;
 
         collidersRed = Physics2D.OverlapBoxAll(overlapPosition, overlapScale, 0, checkRed);
         collidersOrange = Physics2D.OverlapBoxAll(overlapPosition, overlapScale, 0, checkOrange);
@@ -306,7 +308,6 @@ public class STGameManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         for (int i = 0; i < BoxesP1.Length; i++)
@@ -351,11 +352,6 @@ public class STGameManager : MonoBehaviour
 
         if (player1Win != true)
         {
-            if (m_EmptyCat.empty == true)
-            {
-                player1Win = true;
-            }
-
             for (int i = 0; i < fullP1.Length; ++i)
             {
                 if (fullP1[i] == false)
@@ -365,6 +361,11 @@ public class STGameManager : MonoBehaviour
                 }
                 else
                     player1Win = true;
+            }
+
+            if (m_EmptyCat.empty == true)
+            {
+                player1Win = true;
             }
         }
 

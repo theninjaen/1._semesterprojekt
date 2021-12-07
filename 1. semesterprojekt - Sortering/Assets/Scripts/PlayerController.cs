@@ -7,14 +7,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private int maxCarry;
     private bool carryObject = false;
     private Vector3 previousGood = Vector3.zero;
     private BoxMovement moveBox;
     private GameObject hitBox;
-    
-    [HideInInspector]
-    public int currentCarry = 0;
+    private float lastUse;
+
     [HideInInspector]
     public Vector2 movement;
     [HideInInspector]
@@ -27,11 +25,13 @@ public class PlayerController : MonoBehaviour
     public float radius;
     public float distance;
     public float speed;
+    public float useLimit;
     public Vector2 highlightScale;
 
     // Start is called before the first frame update
     void Start()
     {
+        lastUse = -useLimit;
         hitBoxHighlight.transform.localScale = highlightScale;
     }
 
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
             else if (carryObject == true)
             {
-                moveBox.OnDrop();
+                moveBox.StartCoroutine("OnDrop");
 
                 player.transform.DetachChildren();
                 carryObject = false;
@@ -88,11 +88,14 @@ public class PlayerController : MonoBehaviour
         }
         if (m_PlayerNumber == 2)
         {
-            if (Input.GetButtonDown("Throw" + m_PlayerNumber) && carryObject == true)
+            if (Input.GetButtonDown("Throw" + m_PlayerNumber) && carryObject == true && Time.fixedTime - lastUse > useLimit)
             {
-                moveBox.OnThrow();
+                lastUse = Time.fixedTime;
+                moveBox.parentTransform = transform;
+                moveBox.StartCoroutine("OnThrow");
+
+                transform.DetachChildren();
                 carryObject = false;
-                print("yas");
             }
         }
     }
