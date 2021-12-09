@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private GameObject hitBox;
     private float lastUse;
     private AudioSource walking;
+    private float soundTimer;
 
     [HideInInspector]
     public Vector2 movement;
@@ -41,8 +42,8 @@ public class PlayerController : MonoBehaviour
         lastUse = -useLimit;
         hitBoxHighlight.transform.localScale = highlightScale;
         walking = gameObject.GetComponent<AudioSource>();
-        //PlayNoise();
-        //GetComponent<SpriteRenderer>().sprite = spriteList[0];
+        PlayNoise();
+        GetComponent<SpriteRenderer>().sprite = spriteList[0];
     }
 
     // Update is called once per frame
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal" + m_PlayerNumber);
         movement.y = Input.GetAxisRaw("Vertical" + m_PlayerNumber);
 
-        /*if (movement.x < 0)
+        if (movement.x < 0)
         {
             GetComponent<SpriteRenderer>().sprite = spriteList[2];
             GetComponent<SpriteRenderer>().flipX = false;
@@ -81,11 +82,6 @@ public class PlayerController : MonoBehaviour
         {
             walking.Stop();
         }
-
-        if(ownNoise.isPlaying)
-        {
-            Invoke("PlayNoise", 10f);
-        }*/
 
         Vector3 dir = new Vector2(movement.x, movement.y);
 
@@ -123,7 +119,7 @@ public class PlayerController : MonoBehaviour
                 moveBox = GetComponentInChildren<BoxMovement>();
                 moveBox.OnPickup();
 
-                //pickUp.Play();
+                pickUp.Play();
             }
 
             else if (carryObject == true)
@@ -133,8 +129,12 @@ public class PlayerController : MonoBehaviour
                 player.transform.DetachChildren();
                 carryObject = false;
 
-                //drop.Play();
+                drop.Play();
             }
+
+            soundTimer = Random.Range(5f, 20f);
+
+            Invoke("PlayNoise", soundTimer);
         }
         if (m_PlayerNumber == 2)
         {
@@ -152,10 +152,10 @@ public class PlayerController : MonoBehaviour
 
     void PlayRandom()
     {
-        walking.clip = walk[Random.Range(0, (walk.Length-1))];
+        walking.clip = walk[Random.Range(0, walk.Length-1)];
         walking.pitch = Random.Range(0.95f, 1.05f);
         walking.Play();
-        walking.volume = 0.1f;
+        walking.volume = 0.5f;
     }
 
     void PlayNoise()
