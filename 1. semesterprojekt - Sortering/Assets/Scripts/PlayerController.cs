@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
             hitBoxHighlight.transform.position = new Vector2(20, 20);
         }
 
-        if (Input.GetButtonDown("PickUp" + m_PlayerNumber))
+        if (hit && Input.GetButtonDown("PickUp" + m_PlayerNumber))
         {
             if (carryObject == false && hit.collider.tag == "Pick Up")
             {
