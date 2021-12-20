@@ -110,30 +110,26 @@ public class PlayerController : MonoBehaviour
             hitBoxHighlight.transform.position = new Vector2(20, 20);
         }
 
-        if (hit && Input.GetButtonDown("PickUp" + m_PlayerNumber))
+        if (hit && Input.GetButtonDown("PickUp" + m_PlayerNumber) && carryObject == false && hit.collider.tag == "Pick Up")
         {
-            if (hit && carryObject == false && hit.collider.tag == "Pick Up")
-            {
-                hit.collider.transform.SetParent(player);
-                carryObject = true;
+            hit.collider.transform.SetParent(player);
+            carryObject = true;
 
-                moveBox = GetComponentInChildren<BoxMovement>();
-                moveBox.OnPickup();
+            moveBox = GetComponentInChildren<BoxMovement>();
+            moveBox.OnPickup();
 
-                pickUp.Play();
-            }
+            pickUp.Play();
 
-            else if (carryObject == true)
-            {
-                moveBox.StartCoroutine("OnDrop");
+        } else if (Input.GetButtonDown("PickUp" + m_PlayerNumber) && carryObject == true)
+        {
+            moveBox.StartCoroutine("OnDrop");
 
-                player.transform.DetachChildren();
-                carryObject = false;
+            player.transform.DetachChildren();
+            carryObject = false;
 
-                drop.Play();
-            }
-
+            drop.Play();
         }
+
         if (m_PlayerNumber == 2)
         {
             if (Input.GetButtonDown("Throw" + m_PlayerNumber) && carryObject == true && Time.fixedTime - lastUse > useLimit)

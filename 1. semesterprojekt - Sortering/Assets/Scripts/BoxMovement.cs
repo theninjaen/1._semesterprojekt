@@ -181,8 +181,6 @@ public class BoxMovement : MonoBehaviour
                 randomX = Random.Range(-1, 2);
                 randomY = Random.Range(-1, 2);
                 bestPos = new Vector2(transform.position.x + randomX, transform.position.y + randomY);
-
-                boxesStacked = 1;
             }
         } else
         {
@@ -192,7 +190,6 @@ public class BoxMovement : MonoBehaviour
         
         if (!flying)
         {
-
             Vector3 startPos = transform.position;
             Vector3 moveDirection = (bestPos - startPos) / 10;
             Vector3 shadowStartPos = shadow.transform.position;
@@ -235,6 +232,9 @@ public class BoxMovement : MonoBehaviour
                 bestBox.enabled = false;
                 bestCanvas.SetActive(false);
                 bestOverlap = 100;
+            } else
+            {
+                boxesStacked = 1;
             }
         }
 

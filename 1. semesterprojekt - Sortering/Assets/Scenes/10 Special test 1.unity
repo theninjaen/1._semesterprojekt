@@ -3744,6 +3744,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckBox (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
 --- !u!1 &359597132 stripped
@@ -4461,7 +4465,7 @@ MonoBehaviour:
   rb: {fileID: 543339670}
   hitBoxHighlight: {fileID: 1809130612}
   radius: 0.25
-  distance: 0.85
+  distance: 1.25
   speed: 2000
   useLimit: 0
   highlightScale: {x: 0.12, y: 0.12}
@@ -5223,6 +5227,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckBox (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
 --- !u!4 &627489133 stripped
@@ -5354,6 +5362,10 @@ PrefabInstance:
     - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
       propertyPath: m_Name
       value: CheckBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
@@ -7246,6 +7258,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckBox (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
 --- !u!4 &877293187 stripped
@@ -7299,10 +7315,10 @@ MonoBehaviour:
   rb: {fileID: 889529186}
   hitBoxHighlight: {fileID: 1337919821}
   radius: 0.25
-  distance: 0.85
+  distance: 1.25
   speed: 2000
   useLimit: 0
-  highlightScale: {x: 1.2, y: 1.2}
+  highlightScale: {x: 0.12, y: 0.12}
   pickUp: {fileID: 889529191}
   drop: {fileID: 889529190}
   walk:
@@ -7769,6 +7785,10 @@ PrefabInstance:
     - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
       propertyPath: m_Name
       value: CheckBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
@@ -12039,6 +12059,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckBoxCat
       objectReference: {fileID: 0}
+    - target: {fileID: 1998559523163374403, guid: c739bd247cdd79445ad525d62cc757bf, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8002998857712304731, guid: c739bd247cdd79445ad525d62cc757bf, type: 3}
       propertyPath: checkLayer.m_Bits
       value: 8
@@ -12235,7 +12259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1617701016}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CheckboxesP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12380,6 +12404,10 @@ PrefabInstance:
     - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
       propertyPath: m_Name
       value: CheckBox (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
@@ -12628,7 +12656,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1666929864}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CheckboxesP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13330,6 +13358,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckBox (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
 --- !u!1 &1809130612
@@ -13469,6 +13501,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckBox (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
 --- !u!1001 &1897681788
@@ -13525,6 +13561,10 @@ PrefabInstance:
     - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
       propertyPath: m_Name
       value: CheckBox (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830979878164686065, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1eb46ed39e8154ebb3f6ceab822efe, type: 3}

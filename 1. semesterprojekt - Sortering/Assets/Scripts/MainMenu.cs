@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartTurorial()
     {
-        SceneManager.LoadScene("Turorial");
+        SceneManager.LoadScene("Tutorial");
     }
 
     public void ExitGame()
