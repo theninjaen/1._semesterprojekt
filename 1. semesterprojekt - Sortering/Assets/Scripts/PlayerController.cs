@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
         walking = gameObject.GetComponent<AudioSource>();
         PlayNoise();
         GetComponent<SpriteRenderer>().sprite = spriteList[0];
+        soundTimer = Random.Range(5f, 20f);
     }
 
     // Update is called once per frame
@@ -111,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
         if (hit && Input.GetButtonDown("PickUp" + m_PlayerNumber))
         {
-            if (carryObject == false && hit.collider.tag == "Pick Up")
+            if (hit && carryObject == false && hit.collider.tag == "Pick Up")
             {
                 hit.collider.transform.SetParent(player);
                 carryObject = true;
@@ -132,9 +133,6 @@ public class PlayerController : MonoBehaviour
                 drop.Play();
             }
 
-            soundTimer = Random.Range(5f, 20f);
-
-            Invoke("PlayNoise", soundTimer);
         }
         if (m_PlayerNumber == 2)
         {
@@ -148,6 +146,14 @@ public class PlayerController : MonoBehaviour
                 carryObject = false;
             }
         }
+
+        soundTimer -= Time.deltaTime;
+
+        if (soundTimer <= 0)
+        {
+            PlayNoise();
+            soundTimer = Random.Range(5f, 20f);
+        }
     }
 
     void PlayRandom()
@@ -155,7 +161,7 @@ public class PlayerController : MonoBehaviour
         walking.clip = walk[Random.Range(0, walk.Length-1)];
         walking.pitch = Random.Range(0.95f, 1.05f);
         walking.Play();
-        walking.volume = 0.5f;
+        walking.volume = 0.3f;
     }
 
     void PlayNoise()

@@ -59,6 +59,7 @@ public class STGameManager : MonoBehaviour
     public GameObject winText1;
     public GameObject winText2;
     public GameObject reset;
+    public GameObject menu;
     public bool player1Win;
     public bool player2Win;
     public int fullCheckP1;
@@ -391,5 +392,20 @@ public class STGameManager : MonoBehaviour
             winText2.SetActive(true);
             reset.SetActive(true);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!menu.activeSelf)
+            {
+                menu.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else
+            {
+                menu.SetActive(false);
+                Time.timeScale = 1;
+            }
+        }
+
     }
 }
